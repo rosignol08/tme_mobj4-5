@@ -20,27 +20,29 @@ namespace Netlist
     Node *Net::getNode(size_t id)const{
         return this->nodes_[id];
     }
-    size_t Net::getFreeNodeId()const{
+    size_t Net::getFreeNodeId() const {
         //on doit trouver l'index de la première case libre dans le tableau 
         //si aucune case n'est libre, elle renverra la taille du tableau,
-        //c'est à dire l'index situé immédiatement après le dernier élément TODO
-        size_t i = 0;
-        while(getNode(i) != nullptr){
-            i++;//pas la bonne façon de faire TODO
-        }/*
-        if()//check si on a une case libre
-        {
-            return this->nodes_[i].noid; l'id de la case
+        //c'est à dire l'index situé immédiatement après le dernier élément
+        for (size_t i = 0; i < nodes_.size(); ++i) {
+            if (nodes_[i] == nullptr) {
+                return i;
+            }
         }
-        else{
-            return i;
+        //pas de case libre return size du tab
+        return nodes_.size();
+    }
+    void Net::add(Node * node){
+        this->nodes_.push_back(node);
+    }
+    bool Net::remove(Node * node){
+        for(size_t i = 0; i < this->nodes_.size(); i++){
+            if(this->nodes_[i] == node){
+                this->nodes_.erase(this->nodes_.begin()+i);
+                return true;
+            }
         }
-            */
-    }
-    void Net::add(Node *){
-        //this->nodes_.push_back(Node*)//faut voir si on doit pas  donner une variable ici et à remove
-    }
-    bool Net::remove(Node *){
+        return false;
 
     }
     //const std::vector<Node *> &

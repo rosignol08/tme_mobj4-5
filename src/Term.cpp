@@ -25,34 +25,36 @@ namespace Netlist{
         return this->name_;
     }
     Node*                  Term::getNode         (){
-        //return this->node_; erreur ici TODO
+        return &this->node_;
     }
     Net*                   Term::getNet          ()const{
         return this->net_;
     }
     Cell*                  Term::getCell         ()const{
-        //return this-> trouver un moyen d'avoir la cell TODO
+        return (owner_ && !isExternal()) ? static_cast<Cell*>(owner_) : nullptr;
     }
     Cell*                  Term::getOwnerCell    ()const{
         //faut appeler la fontion de net peut etre ?
     }
     Instance*              Term::getInstance     ()const{
+        return (owner_ && isExternal()) ? static_cast<Instance*>(owner_) : nullptr;//checker ça
 
     }
     Point                   Term::getPosition     ()const{
-        //return this->direction_ je sait pas
+        return node_.getPosition();
     }
-    void                    Term::setNet          ( Net * ){
+    void                    Term::setNet          ( Net * net ){
+        this->net_ = net;
+    }
+    void                    Term::setNet          ( const std::string& netnom){
+        this->net_ = getCell()->getNet(netnom);
 
     }
-    void                    Term::setNet          ( const std::string& ){
-
-    }
-    void                    Term::setPosition     ( const Point& ){
-
+    void                    Term::setPosition     ( const Point& point){
+        node_.setPosition(point);
     }
     void                    Term::setPosition     ( int x , int y ){
-
+        node_.setPosition(x,y);
     }
     //Type                    getType         () const ;
     //Direction               getDirection    ();
