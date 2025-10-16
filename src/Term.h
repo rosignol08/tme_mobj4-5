@@ -18,12 +18,12 @@ namespace Netlist {
                                     ~Term          (){};
             bool                    isInternal      () const ;
             bool                    isExternal      () const ;
-            const std::string &   getName         () const ;
-            Node*                  getNode         ();
-            Net*                   getNet          () const ;
-            Cell*                  getCell         () const ;
-            Cell*                  getOwnerCell    () const ;
-            Instance*              getInstance     () const ;
+            const std::string &     getName         () const ;
+            Node*                   getNode         ();
+            Net*                    getNet          () const ;
+            Cell*                   getCell         () const ;
+            Cell*                   getOwnerCell    () const ;
+            Instance*               getInstance     () const ;
             Direction               getDirection    () const ;
             Point                   getPosition     () const ;
             Type                    getType         () const ;
