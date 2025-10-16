@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/TME4/src
+CXX_INCLUDES = -I/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/tme_mobj4-5/src
 
 CXX_FLAGS = -Wall -g -g
 

@@ -10,7 +10,7 @@ namespace Netlist{
         {
             return false;
         }
-
+        return false;//par defaut
     }
     bool                    Term::isExternal      ()const{
      if(this->type_ == 2){
@@ -19,6 +19,7 @@ namespace Netlist{
         {
             return false;
         }
+        return false;//par defaut
 
     }
     const std::string &   Term::getName         () const{
@@ -38,6 +39,8 @@ namespace Netlist{
         if(isExternal()){
             return static_cast<Cell*>(owner_); //obligé de cast
         }
+        //sinon il a pas d'owner cell donc on renvoie nullptr
+        return nullptr;
     }
     Instance*              Term::getInstance     ()const{
         return (owner_ && isExternal()) ? static_cast<Instance*>(owner_) : nullptr;//checker ça

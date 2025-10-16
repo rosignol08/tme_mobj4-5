@@ -40,7 +40,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "tme45::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tme45-Debug-f67f66262ec20b1e0f09.json",
+					"jsonFile" : "target-tme45-Debug-f27914c05dc6c349f9e3.json",
 					"name" : "tme45",
 					"projectIndex" : 0
 				}
@@ -50,8 +50,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/TME4/build",
-		"source" : "/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/TME4/src"
+		"build" : "/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/tme_mobj4-5/build",
+		"source" : "/home/romaric/Documents/cours_M1/M1_S1/cours_mobj/tme_mobj4-5/src"
 	},
 	"version" : 
 	{
