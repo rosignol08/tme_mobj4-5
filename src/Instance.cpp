@@ -4,6 +4,35 @@
 using namespace std;
 
 namespace Netlist{
+            //constructeur : doit gerer l'ajout de l'instance au niveau de la cell
+            Instance::Instance ( Cell* owner, Cell* model, const std::string& name) 
+                : owner_(owner), masterCell_(model), name_(name), position_(0,0) {
+                    //ajout de l'instance à la cell owner
+                    if(owner_ != nullptr){
+                        owner_->add(this);
+                    }
+                    //duplication des terminaux de la cell model
+                    if(masterCell_ != nullptr){
+                        const vector<Term*>& modelTerms = masterCell_->getTerms();
+                        for(const auto& term : modelTerms){
+                            Term* newTerm = new Term(this, term);
+                            this->terms_.push_back(newTerm);
+                        }
+                    }
+                }
+            //destructeur : doit gerer le retrait de l'instance au niveau de la cell
+            Instance::~Instance (){
+                //retrait de l'instance de la cell owner
+                if(owner_ != nullptr){
+                    owner_->remove(this);
+                }
+                //destruction des terminaux
+                for(auto& term : terms_){
+                    delete term; //psk on utilise new dans le constructeur
+                }
+                terms_.clear();
+            }
+
             const std::string& Instance::getName() const {
                 return name_;
             }
