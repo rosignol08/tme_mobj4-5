@@ -27,21 +27,19 @@ namespace Netlist {
             Cell*               owner_;
             std::string         name_;
             unsigned int        id_;
-            Term::Type        type_;
+            Term::Type          type_;
             std::vector<Node*>  nodes_;
 
         public:
-                                //Net( Cell*, const std::string&, Term::Type );
-            Cell*               getCell         () const;
-            const std::string&  getName         () const;
-            unsigned int        getId           () const;
-            Term::Type          getType         () const;
-            Node*               getNode         ( size_t id ) const;
-            const std::vector<Node*>&
-                                getNodes        () const;
-            size_t              getFreeNodeId   () const;
-            void                add             (Node*);
-            bool remove (Node*);
+            Cell*                     getCell         () const;
+            const std::string&        getName         () const;
+            unsigned int              getId           () const;
+            Term::Type                getType         () const;
+            //Node*                     getNode         (size_t id) const; //tu sort ça d'où ? TODO
+            const std::vector<Node*>& getNodes        () const;
+            size_t                    getFreeNodeId   () const;
+            void                      add             (Node*);
+            bool                      remove          (Node*);
     };
 }
 #endif
