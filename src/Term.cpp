@@ -34,14 +34,23 @@ namespace Netlist{
         return (owner_ && !isExternal()) ? static_cast<Cell*>(owner_) : nullptr;
     }
     Cell*                  Term::getOwnerCell    ()const{
-        //faut appeler la fontion de net peut etre ?
+        //getOwnerCell() renvoie la Cell dans laquelle l'objet se trouve, ce qui, dans le cas d'un Term d'instance est la Cell possédant celle-ci.
+        if(isExternal()){
+            return static_cast<Cell*>(owner_); //obligé de cast
+        }
     }
     Instance*              Term::getInstance     ()const{
         return (owner_ && isExternal()) ? static_cast<Instance*>(owner_) : nullptr;//checker ça
 
     }
+    Term::Direction              Term::getDirection    ()const{
+        return this->direction_;
+    }
     Point                   Term::getPosition     ()const{
         return node_.getPosition();
+    }
+    Term::Type              Term::getType               () const{
+        return this->type_;
     }
     void                    Term::setNet          ( Net * net ){
         this->net_ = net;
@@ -56,8 +65,7 @@ namespace Netlist{
     void                    Term::setPosition     ( int x , int y ){
         node_.setPosition(x,y);
     }
-    //Type                    getType         () const ;
-    //Direction               getDirection    ();
-    //void                    setDirection    ( Direction );
-
+    void                    Term::setDirection    ( Direction direction_ ){
+        this->direction_ = direction_;
+    }
 }

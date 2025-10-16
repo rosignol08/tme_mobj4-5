@@ -2,8 +2,7 @@
 
 using namespace std;
 
-namespace Netlist
-{
+namespace Netlist{
     Cell *getCell();
     const std::string &Net::getName()const{
         return this->name_;
