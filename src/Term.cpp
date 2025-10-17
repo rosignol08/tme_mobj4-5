@@ -3,6 +3,7 @@
 using namespace std;
 
 namespace Netlist{
+    //constructeur pour un terminal interne
     bool                    Term::isInternal      ()const{
         if(this->type_ == 1){
             return true;

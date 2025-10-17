@@ -13,6 +13,18 @@ namespace Netlist {
         public:
             enum Type       { Internal=1, Externa=2 };
             enum Direction  { In=1, Out=2, Inout=3, Tristate=4, Transcv=5, Unkown=6 };
+            /*
+            Le constructeur est chargé de maintenir la cohérence 
+            de la structure de données. 
+            Concrètement, le nouveau connecteur (Term)
+            devra être ajouté à la liste, soit de la Cell,
+            soit de l'Instance pour laquelle il vient d'être créé. Inversement, 
+            le destructeur devra le retirer de son propriétaire.
+            Dans le cas d'un terminal d'Instance,
+            il s'agit de dupliquer intégralement
+            le Term du modèle dans l'instance. 
+            Il est proche (mais pas identique) à un constructeur par copie.
+            */
                                     Term            ( Cell* , const std :: string & name , Direction );
                                     Term            ( Instance * , const Term * modelTerm );
                                     ~Term          (){};
