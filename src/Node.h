@@ -29,8 +29,7 @@ namespace Netlist {
               Net*    getNet      () const;
       inline  Term*   getTerm     () const;
       inline  void    setId       ( size_t );
-    private:
-                      Node        ( const Node& );
+    public:
               Node&   operator=   ( const Node& );
     protected:
       size_t  id_;

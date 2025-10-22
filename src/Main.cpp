@@ -12,7 +12,6 @@ using namespace std;
 #include "Cell.h"
 using namespace Netlist;
 
-
 int main ( int argc, char* argv[] )
 {
   cout << "\nConstruction du modele <and2>." << endl;

@@ -1,5 +1,6 @@
 #include "Term.h"
 #include "Net.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -11,9 +12,20 @@ namespace Netlist{
             direction_  (direction),
             type_       (),
             net_        (),
-            node_       (Node(this, Node::noid))
+            node_       (Node(this, Netlist::Net::noid))
     {
         cell->add(this);
+    }
+
+    Term::Term ( Instance* inst, const Term* modelTerm)
+        :   owner_      (),
+            name_       (modelTerm->getName()),
+            direction_  (modelTerm->getDirection()),
+            type_       (modelTerm->getType()),
+            net_        (modelTerm->getNet()),
+            node_       (Node(this, (size_t) Net::noid))
+    {
+        inst->add(this);
     }
 
     Term::~Term() {}

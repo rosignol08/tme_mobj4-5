@@ -1,9 +1,12 @@
 #include "Net.h"
+#include  <limits>
 
 using namespace std;
 
 namespace Netlist{
     
+    const size_t Net::noid = numeric_limits<size_t>::max();
+
     // Constructeur
     Net::Net ( Cell* cell, const std::string & name , Term::Type dir )
         :   owner_  (),
