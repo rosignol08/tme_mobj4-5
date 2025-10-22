@@ -21,6 +21,7 @@ namespace Netlist {
     public:
                       Node        ( Term*, size_t id=noid );
                      ~Node        ();
+      void            toXml       (std::ostream&);
       inline  Point   getPosition () const;
       inline  void    setPosition ( const Point& );
       inline  void    setPosition ( int x, int y );

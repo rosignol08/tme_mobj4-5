@@ -4,6 +4,27 @@ using namespace std;
 
 namespace Netlist{
     
+    // Constructeur
+    Net::Net ( Cell* cell, const std::string & name , Term::Type dir )
+        :   owner_  (),
+            name_   (name),
+            type_   (dir),
+            id_     (cell->newNetId()),
+            nodes_  ()
+    {
+        cell->add(this);
+    }
+
+    Net::Net ( Instance* inst, const std::string & name , Term::Type dir )
+        :   owner_  (),
+            name_   (name),
+            type_   (dir),
+            id_     (inst->getMasterCell()->newNetId()),
+            nodes_  ()
+    {
+        inst->getMasterCell()->add(this);
+    }
+
     //retourne le pointeur vers la cellule propriétaire du net
     Cell* Net::getCell()const{
         return this->owner_;
@@ -36,13 +57,16 @@ namespace Netlist{
             if (nodes_[i] == nullptr) {
                 return i;
             }
-        }
-        //pas de case libre return size du tab
+        }//pas de case libre return size du tab
         return nodes_.size();
     }
     //ajoute un noeud au net
     void Net::add(Node * node){
-        this->nodes_.push_back(node);
+        size_t id = this->getFreeNodeId();
+        if (id <= this->nodes_.size()){
+            node->setId(id); // associe l'id du noeud
+            this->nodes_.push_back(node);
+        }
     }
     //enlève un noeud au net
     bool Net::remove(Node * node){
@@ -53,6 +77,23 @@ namespace Netlist{
             }
         }
         return false;
+    }
 
+    void Net::toXml (std::ostream& stream){
+        stream << indent << "<net name=\"" << name_ << "\" type=\"";
+        switch(type_){
+            case Term::Type::Internal:
+                stream << "Internal";
+                break;
+            case Term::Type::External:
+                stream << "External";
+                break;
+        }
+        stream << "\">\n";
+        indent++;
+        for (Node* n: nodes_){
+            n->toXml(stream);
+        }
+        stream << --indent << "</net>\n";
     }
 }

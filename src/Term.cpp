@@ -1,8 +1,23 @@
 #include "Term.h"
+#include "Net.h"
 
 using namespace std;
 
 namespace Netlist{
+
+    Term::Term ( Cell* cell, const std :: string & name , Direction direction)
+        :   owner_      (), 
+            name_       (name),
+            direction_  (direction),
+            type_       (),
+            net_        (),
+            node_       (Node(this, Node::noid))
+    {
+        cell->add(this);
+    }
+
+    Term::~Term() {}
+
     //constructeur pour un terminal interne
     bool                    Term::isInternal      ()const{
         if(this->type_ == 1){
@@ -57,11 +72,12 @@ namespace Netlist{
         return this->type_;
     }
     void                    Term::setNet          ( Net * net ){
+        net->add(&node_);
         this->net_ = net;
     }
     void                    Term::setNet          ( const std::string& netnom){
-        this->net_ = getCell()->getNet(netnom);
-
+        net_ = getCell()->getNet(netnom);
+        net_->add(&node_);
     }
     void                    Term::setPosition     ( const Point& point){
         node_.setPosition(point);
@@ -71,5 +87,30 @@ namespace Netlist{
     }
     void                    Term::setDirection    ( Direction direction_ ){
         this->direction_ = direction_;
+    }
+
+    void Term::toXml( std::ostream& stream){
+        stream << indent << "<term name=\"" << name_;
+        stream << "\" direction=\"";
+        switch(direction_){
+            case In:
+                stream << "In";
+                break;
+            case Out:
+                stream << "Out";
+                break;
+            case Inout:
+                stream << "Inout";
+            case Tristate:
+                stream << "Tristate";
+                break;
+            case Transcv:
+                stream << "Transcv";
+                break;
+            case Unknown:
+                stream << "Unknown";
+                break;
+        }
+        stream << "\"/>\n";
     }
 }

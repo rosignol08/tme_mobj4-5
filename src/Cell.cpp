@@ -127,7 +127,6 @@ namespace Netlist {
   {
     Term* term = getTerm( name );
     if (term == NULL) return false;
- 
     term->setNet( net );
     return true;
   }
@@ -160,8 +159,39 @@ namespace Netlist {
   unsigned int Cell::newNetId ()
   { return maxNetIds_++; }
 
+  void afficherNombreCaracteres(const std::string& s) {
+    std::cout << "Nombre de caractères: " << s.size() << std::endl;
+  }
+  void Cell::toXml(ostream& stream){
+    stream << "<cell name=\"" << name_ << "\">\n";
+    ++indent;
 
-  // Cell::toXml() à écrire ici...
+    stream << "<terms>\n";
+    ++indent;
+    for (Term* t: terms_){
+      t->toXml(stream);
+    }
+    indent--;
+    stream << "</terms>\n";
+  
+    stream << "<instances>\n";
+    indent++;
+    for (Instance* i: instances_){
+      i->toXml(stream);
+    }
+    indent--;
+    stream << "</instances>\n";
+  
+    stream << "<nets>\n";
+    indent++;
+    for (Net* n: nets_){
+      n->toXml(stream);
+    }
+    indent--;
+    stream << "</nets>\n";
 
+    indent--;
+    stream << "</cell>\n";
+  }
 
 }  // Netlist namespace.

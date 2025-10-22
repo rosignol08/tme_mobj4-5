@@ -9,7 +9,7 @@
 namespace Netlist {
 
     class Instance{
-        public :
+        private:
                 Cell*               owner_;
                 Cell*               masterCell_;
                 std::string         name_;
@@ -25,24 +25,26 @@ namespace Netlist {
         elle doit donc les détruire dans son destructeur.
 
         */
-        Instance                ( Cell* owner, Cell* model, const std::string& );
-        ~Instance               ();
 
-        //accesseurs
-        const std::string&        getName       () const;
-        Cell*                     getMasterCell () const;
-        Cell*                     getCell       () const;
-        const std::vector<Term*>& getTerms      () const;
-        Term*                     getTerm       (const std::string&) const;
-        Point                     getPosition   () const;
-        //Modificateurs. connect() va associer le Net au terminal de nom name (s'il existe).
+        public:
+                Instance                ( Cell* owner, Cell* model, const std::string& );
+                ~Instance               ();
 
-        bool                      connect       (const std::string& name, Net*);
-        void                      add           (Term*);
-        void                      remove        (Term*);
-        void                      setPosition   (const Point&);
-        void                      setPosition   (int x, int y);
+                //accesseurs
+                const std::string&        getName       () const;
+                Cell*                     getMasterCell () const;
+                Cell*                     getCell       () const;
+                const std::vector<Term*>& getTerms      () const;
+                Term*                     getTerm       (const std::string&) const;
+                Point                     getPosition   () const;
+                //Modificateurs. connect() va associer le Net au terminal de nom name (s'il existe).
 
+                bool                      connect       (const std::string& name, Net*);
+                void                      add           (Term*);
+                void                      remove        (Term*);
+                void                      setPosition   (const Point&);
+                void                      setPosition   (int x, int y);
+                void                      toXml         (std::ostream&);
         /*
         class Term   masterCell_;
             std::string         name_;

@@ -1,4 +1,5 @@
 #include "Instance.h"
+#include "Term.h"
 #include <algorithm>//voir si c'est obligé ça TODO
 
 using namespace std;
@@ -13,11 +14,13 @@ namespace Netlist{
                     }
                     //duplication des terminaux de la cell model
                     if(masterCell_ != nullptr){
-                        const vector<Term*>& modelTerms = masterCell_->getTerms();
-                        for(const auto& term : modelTerms){
-                            Term* newTerm = new Term(this, term);
-                            this->terms_.push_back(newTerm);
-                        }
+                        // vector<Term*>& modelTerms = masterCell_->getTerms();
+                        this->terms_ = masterCell_->getTerms(); // TODO À REVOIR IL FAIT DUPLIQUER
+                        // for(Term term : modelTerms){
+                        //     // Term* newTerm = new Term(this, term);
+                        //     Term* newTerm = new Term(this, &term);
+                        //     this->terms_.push_back(*newTerm);
+                        // }
                     }
                 }
             //destructeur : doit gerer le retrait de l'instance au niveau de la cell
@@ -93,4 +96,11 @@ namespace Netlist{
                 this->position_.setY(y);
                 return;
             };
+
+            void Instance::toXml(ostream& stream){
+                stream << indent << "<instance name=\"" << name_ << " mastercell=\"";
+                if (masterCell_) stream << masterCell_->getName();
+                else stream << "None";
+                stream << "\" x=\"" << position_.getX() << "\" y=\"" << position_.getY() << "\"/>\n";
+            }
 }
