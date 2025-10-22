@@ -17,7 +17,8 @@ namespace Netlist{
                     if(masterCell_ != nullptr){
                         vector<Term*> modelTerms = masterCell_->getTerms();
                         for(const Term* term : modelTerms){
-                            this->terms_.push_back(new Term(this, term));
+                            auto newterm = new Term(this, term);
+                            this->terms_.push_back(newterm);
                         }
                     }
                 }

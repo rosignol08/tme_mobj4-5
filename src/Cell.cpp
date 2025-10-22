@@ -166,32 +166,32 @@ namespace Netlist {
     stream << "<cell name=\"" << name_ << "\">\n";
     ++indent;
 
-    stream << "<terms>\n";
+    stream << indent <<"<terms>\n";
     ++indent;
     for (Term* t: terms_){
       t->toXml(stream);
     }
     indent--;
-    stream << "</terms>\n";
+    stream << indent << "</terms>\n";
   
-    stream << "<instances>\n";
+    stream << indent << "<instances>\n";
     indent++;
     for (Instance* i: instances_){
       i->toXml(stream);
     }
     indent--;
-    stream << "</instances>\n";
+    stream << indent << "</instances>\n";
   
-    stream << "<nets>\n";
+    stream << indent << "<nets>\n";
     indent++;
     for (Net* n: nets_){
       n->toXml(stream);
     }
     indent--;
-    stream << "</nets>\n";
+    stream << indent << "</nets>\n";
 
     indent--;
-    stream << "</cell>\n";
+    stream << indent << "</cell>\n";
   }
 
 }  // Netlist namespace.

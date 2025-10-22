@@ -59,5 +59,51 @@ int main ( int argc, char* argv[] )
   ha_and2->connect(  "q", ha_cout );
   halfadder->toXml( cout );
 
+  cout << "\nConstruction du modele <fulladder>." << endl;
+  Cell* fulladder = new Cell ("fulladder");
+  new Term( fulladder, "a"   , Term::In  );
+  new Term( fulladder, "b"   , Term::In  );
+  new Term( fulladder, "sout", Term::Out );
+  new Term( fulladder, "cout", Term::Out );
+  Net*      fa_a    = new Net      ( fulladder, "a"   , Term::External );
+  Net*      fa_b    = new Net      ( fulladder, "b"   , Term::External );
+  Net*      fa_sout = new Net      ( fulladder, "sout", Term::External );
+  Net*      fa_cout = new Net      ( fulladder, "cout", Term::External );
+  Net*      fa_cin  = new Net      ( fulladder, "cin" , Term::External );
+
+  Net*      fa_half1_sout  = new Net      ( halfadder, "sout" , Term::Internal );
+  Net*      fa_half1_cout  = new Net      ( halfadder, "cout" , Term::Internal );
+  Net*      fa_half1_a     = new Net      ( halfadder, "a"    , Term::Internal );
+  Net*      fa_half1_b     = new Net      ( halfadder, "b"    , Term::Internal );
+
+  Net*      fa_half2_sout  = new Net      ( halfadder, "sout" , Term::Internal );
+  Net*      fa_half2_cout  = new Net      ( halfadder, "cout" , Term::Internal );
+  Net*      fa_half2_a     = new Net      ( halfadder, "a"    , Term::Internal );
+  Net*      fa_half2_b     = new Net      ( halfadder, "b"    , Term::Internal );
+
+  Net*      fa_or2_cout    = new Net      ( or2      , "q"    , Term::Internal );
+  Net*      fa_or2_i0      = new Net      ( or2      , "i0"   , Term::Internal );
+  Net*      fa_or2_i1      = new Net      ( or2      , "i1"   , Term::Internal );
+
+  Instance* fa_half1       = new Instance ( fulladder, Cell::find("halfadder"), "halfadder_1" );
+  Instance* fa_half2       = new Instance ( fulladder, Cell::find("halfadder"), "halfadder_2" );
+  Instance* fa_or2         = new Instance ( fulladder, Cell::find("or2"), "or2_1" );
+
+  fulladder->connect( "a"   , fa_a        );
+  fulladder->connect( "b"   , fa_b        );
+  fulladder->connect( "sout", fa_sout     );
+  fulladder->connect( "cout", fa_or2_cout );
+  fulladder->connect( "cin" , fa_cin      );
+
+  fa_half1->connect("a", fa_a             );
+  fa_half1->connect("b", fa_b             );
+  fa_half1->connect("sout", fa_half2_b    );  
+  fa_half1->connect("cout", fa_or2_i1     );
+
+  fa_half2->connect("a", fa_cin           );
+  //fa_half2->connect("b", fa_half2_b); pas besoin d'etre reciproque surement
+  fa_half2->connect("sout", fa_sout       );
+  fa_half2->connect("cout", fa_or2_i0     );
+
   return 0;
 }
