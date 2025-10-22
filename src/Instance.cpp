@@ -3,6 +3,7 @@
 #include <algorithm>//voir si c'est obligé ça TODO
 
 using namespace std;
+using namespace Netlist;
 
 namespace Netlist{
             //constructeur : doit gerer l'ajout de l'instance au niveau de la cell
@@ -14,13 +15,10 @@ namespace Netlist{
                     }
                     //duplication des terminaux de la cell model
                     if(masterCell_ != nullptr){
-                        // vector<Term*>& modelTerms = masterCell_->getTerms();
-                        this->terms_ = masterCell_->getTerms(); // TODO À REVOIR IL FAIT DUPLIQUER
-                        // for(Term term : modelTerms){
-                        //     // Term* newTerm = new Term(this, term);
-                        //     Term* newTerm = new Term(this, &term);
-                        //     this->terms_.push_back(*newTerm);
-                        // }
+                        vector<Term*> modelTerms = masterCell_->getTerms();
+                        for(const Term* term : modelTerms){
+                            this->terms_.push_back(new Term(this, term));
+                        }
                     }
                 }
             //destructeur : doit gerer le retrait de l'instance au niveau de la cell
