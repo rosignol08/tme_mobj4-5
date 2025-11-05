@@ -71,19 +71,19 @@ int main ( int argc, char* argv[] )
   Net*      fa_cout = new Net      ( fulladder, "cout", Term::External );
   Net*      fa_cin  = new Net      ( fulladder, "cin" , Term::External );
 
-  Net*      fa_half1_sout  = new Net      ( halfadder, "sout" , Term::Internal );
-  Net*      fa_half1_cout  = new Net      ( halfadder, "cout" , Term::Internal );
-  Net*      fa_half1_a     = new Net      ( halfadder, "a"    , Term::Internal );
-  Net*      fa_half1_b     = new Net      ( halfadder, "b"    , Term::Internal );
+  Net*      fa_half1_sout  = new Net      ( fulladder, "half1_sout" , Term::Internal );
+  Net*      fa_half1_cout  = new Net      ( fulladder, "half1_cout" , Term::Internal );
+  Net*      fa_half1_a     = new Net      ( fulladder, "half1_a"    , Term::Internal );
+  Net*      fa_half1_b     = new Net      ( fulladder, "half1_b"    , Term::Internal );
 
-  Net*      fa_half2_sout  = new Net      ( halfadder, "sout" , Term::Internal );
-  Net*      fa_half2_cout  = new Net      ( halfadder, "cout" , Term::Internal );
-  Net*      fa_half2_a     = new Net      ( halfadder, "a"    , Term::Internal );
-  Net*      fa_half2_b     = new Net      ( halfadder, "b"    , Term::Internal );
+  Net*      fa_half2_sout  = new Net      ( fulladder, "half2_sout" , Term::Internal );
+  Net*      fa_half2_cout  = new Net      ( fulladder, "half2_cout" , Term::Internal );
+  Net*      fa_half2_a     = new Net      ( fulladder, "half2_a"    , Term::Internal );
+  Net*      fa_half2_b     = new Net      ( fulladder, "half2_b"    , Term::Internal );
 
-  Net*      fa_or2_cout    = new Net      ( or2      , "q"    , Term::Internal );
-  Net*      fa_or2_i0      = new Net      ( or2      , "i0"   , Term::Internal );
-  Net*      fa_or2_i1      = new Net      ( or2      , "i1"   , Term::Internal );
+  Net*      fa_or2_cout    = new Net      ( fulladder, "or2_q"    , Term::Internal );
+  Net*      fa_or2_i0      = new Net      ( fulladder, "or2_i0"   , Term::Internal );
+  Net*      fa_or2_i1      = new Net      ( fulladder, "or2_i1"   , Term::Internal );
 
   Instance* fa_half1       = new Instance ( fulladder, Cell::find("halfadder"), "halfadder_1" );
   Instance* fa_half2       = new Instance ( fulladder, Cell::find("halfadder"), "halfadder_2" );
@@ -104,6 +104,7 @@ int main ( int argc, char* argv[] )
   //fa_half2->connect("b", fa_half2_b); pas besoin d'etre reciproque surement
   fa_half2->connect("sout", fa_sout       );
   fa_half2->connect("cout", fa_or2_i0     );
+  fulladder->toXml( cout );
 
   return 0;
 }
